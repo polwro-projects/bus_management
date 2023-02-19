@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package tests.db;
+package unittests.db;
 
 import static org.junit.Assert.*;
 
@@ -30,7 +30,10 @@ import fakes.db.strategies.FakeManagerStrategy;
 import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.junit.rules.ExpectedException;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
 public class TestDatabaseFacade {
 	private FakeDatabaseFacade mFacade;

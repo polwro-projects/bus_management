@@ -16,14 +16,24 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package tests;
 
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
-import tests.db.*;
+package tests.acceptance;
 
-@RunWith(Suite.class)
+import db.auth.AccountType;
+import db.entities.*;
+import fit.ColumnFixture;
 
-@Suite.SuiteClasses({TestDatabaseFacade.class, TestEntity.class})
+public class TestDatabaseFacadeAddLine extends ColumnFixture {
+	public int accountType;
 
-public class TestDBSuite {}
+	public boolean add() throws RuntimeException {
+		try {
+			SetUp.facade.updateStrategy(AccountType.values()[accountType]);
+		} catch (RuntimeException e) {
+			return false;
+		}
+
+		Line line = new Line(0, "");
+		return SetUp.facade.add(line);
+	}
+}

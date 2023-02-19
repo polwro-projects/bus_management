@@ -17,27 +17,50 @@
  * under the License.
  */
 
-package tests.db;
+package unittests.db;
 
 import static org.junit.Assert.*;
 
 import fakes.db.entities.FakeEntity;
+import java.util.Arrays;
+import java.util.Collection;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.junit.rules.ExpectedException;
+import org.junit.rules.Timeout;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 
+@RunWith(Parameterized.class)
+@Category(unittests.TestDBSuite.class)
 public class TestEntity {
+	private final FakeEntity mEntity;
+	private final int mId;
+
+	@Rule public Timeout globalTimeout = new Timeout(5);
+
+	@Parameters
+	public static Collection<Object[]> data() {
+		return Arrays.asList(new Object[][] {{5}});
+	}
+
+	public TestEntity(int id) {
+		this.mEntity = new FakeEntity(5);
+		this.mId = id;
+	}
+
 	@Test
 	public void copyConstructor() {
-		FakeEntity entity = new FakeEntity(5);
-		FakeEntity anotherEntity = new FakeEntity(5);
+		FakeEntity anotherEntity = new FakeEntity(mId);
 
-		assertTrue(entity.equals(anotherEntity));
+		assertTrue(mEntity.equals(anotherEntity));
 	}
 
 	@Test
 	public void getId() {
-		FakeEntity entity = new FakeEntity(5);
-		assertEquals(entity.getId(), 5);
+		assertEquals(mEntity.getId(), mId);
 	}
 }

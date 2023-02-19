@@ -27,27 +27,34 @@ if(${UNIT_TESTS})
 	add_custom_target(manifest ALL
 		python "${PROJECT_SOURCE_DIR}/scripts/generate_manifest.py" 
 				"${CMAKE_CURRENT_BINARY_DIR}/manifest.txt" 
-				"$ENV{CLASSPATH}"
+				"$ENV{CLASSPATH}" "$ENV{FITNESSE}"
 				"${APP_ENTRY_POINT}"
 	)
 
 	add_jar(test_${CMAKE_PROJECT_NAME} 		
 		${SOURCE_FILES}
 		
-		src/tests/TestRunner.java
-		src/tests/db/TestDBSuite.java
-		src/tests/db/TestDatabaseFacade.java
-		src/tests/db/entities/TestEntity.java
+		src/tests/unittests/TestRunner.java
+		src/tests/unittests/db/TestDBSuite.java
+		src/tests/unittests/db/TestDatabaseFacade.java
+		src/tests/unittests/db/entities/TestEntity.java
 
 		src/tests/fakes/db/FakeDatabaseFacade.java
 		src/tests/fakes/db/auth/FakeAuthenticator.java
 		src/tests/fakes/db/entities/FakeEntity.java
 		src/tests/fakes/db/strategies/FakeManagerStrategy.java
 
+		src/tests/acceptance/SetUp.java
+		src/tests/acceptance/db/TestDatabaseFacadeAddBus.java
+		src/tests/acceptance/db/TestDatabaseFacadeAddEntity.java
+		src/tests/acceptance/db/TestDatabaseFacadeAddLine.java
+		src/tests/acceptance/db/TestDatabaseFacadeAddStation.java
+
 		MANIFEST ${CMAKE_CURRENT_BINARY_DIR}/manifest.txt
 
 		INCLUDE_JARS
 		$ENV{CLASSPATH}
+		$ENV{FITNESSE}
 	)
 else()
 	add_jar(${CMAKE_PROJECT_NAME} 
